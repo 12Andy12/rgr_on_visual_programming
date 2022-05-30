@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="using:RGR_Visual.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="RGR_Visual.Views.QueryEditor"
+        Title="QueryEditor">
+	<SplitView IsPaneOpen="True" OpenPaneLength="200" DisplayMode="Inline">
+		<SplitView.Pane>
+			<StackPanel>
+				<Button Content="Создать запрос" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+				
+			</StackPanel>
+		</SplitView.Pane>
+		<Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*,*" ShowGridLines="False">
+			<TextBlock Text="Таблицы:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			<Grid RowDefinitions="Auto,*" Grid.Row="0" Grid.Column="1">
+				<TextBlock Text="Доступные:" Grid.Row="0"/>
+				<ScrollViewer Grid.Row="1">
+					<ListBox Name="Available" Items="{Binding Tables}" SelectedItem="{Binding SelectedTable}"/>
+				</ScrollViewer>
+			</Grid>
+			<StackPanel Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Button Content="Добавить" HorizontalAlignment="Stretch" Command="{Binding Choose}"/>
+				<Button Content="Удалить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding Delete}"/>
+			</StackPanel>
+			<Grid RowDefinitions="Auto,*" Grid.Row="0" Grid.Column="3">
+				<TextBlock Grid.Row="0" Text="Выбранные:" HorizontalAlignment="Center"/>
+				<ListBox Grid.Row="1" Name="Chosen" Items="{Binding ChosenTables}" SelectedItem="{Binding SelectedChosen}"/>
+			</Grid>
+			<TextBlock Text="Столбцы:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+			<Grid RowDefinitions="Auto,*" Grid.Row="1" Grid.Column="1">
+				<TextBlock Text="Доступные:" Grid.Row="0"/>
+				<ScrollViewer Grid.Row="1">
+					<ListBox Items="{Binding Rows}" SelectedItem="{Binding SelectedRow}"/>
+				</ScrollViewer>
+			</Grid>
+			<StackPanel Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Button Content="Добавить" HorizontalAlignment="Stretch" Command="{Binding ChooseRow}"/>
+				<Button Content="Удалить" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding DeleteRow}"/>
+			</StackPanel>
+			<Grid RowDefinitions="Auto,*" Grid.Row="1" Grid.Column="3">
+				<TextBlock Grid.Row="0" Text="Выбранные:" HorizontalAlignment="Center"/>
+				<ListBox Grid.Row="1" Items="{Binding ChosenRows}" SelectedItem="{Binding SelectedRowChosen}"/>
+			</Grid>
+			<ComboBox SelectedIndex="0" Grid.Row="2" Grid.Column="0">
+				<ComboBoxItem>Условие выборки</ComboBoxItem>
+				<ComboBoxItem>Группировать по:</ComboBoxItem>
+				<ComboBoxItem>Соединить с:</ComboBoxItem>
+			</ComboBox>
+			<ComboBox SelectedItem="{Binding SelectedRowForCondition}" Items="{Binding ChosenRows}" Grid.Row="2" Grid.Column="1"/>
+			<ComboBox Items="{Binding Operators}" SelectedItem="{Binding SelectedOperator}" Grid.Row="2" Grid.Column="2"/>
+			<TextBox Text="{Binding Condition}" Grid.Row="2" Grid.Column="3"/>
+			<Button Content="Выполнить запрос" Command="{Binding ExecuteQuery}" Grid.Row="3"/>
+		</Grid>
+	</SplitView>
+</Window>
